@@ -4,13 +4,14 @@ import random
 class PokerBotTemplate:
     def __init__(self, name):
         self.name = name
+        self.saved_state = {}
         pass
     
-    def pre_flop_strategy(self):
+    def initialize_strategy(self, state):
         pass
     
-    def turn_strategy(self):
-        pass
-    
-    def river_strategy(self):
-        pass
+    def play(self, state):
+        '''
+        return tuple (Action, Amount)
+        '''
+        return ("CheckAction", state["call_amount"])
