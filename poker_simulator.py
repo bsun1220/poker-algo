@@ -2,6 +2,7 @@ import copy
 import numpy as np
 import random
 from poker_tools import return_hand_winner
+from poker_bot import PokerBotTemplate
 
 class PokerGame:
     def __init__(self, max_players = 10, starting_pot = 1000, blinds = (5, 10)):
@@ -38,7 +39,6 @@ class PokerGame:
             print("Cannot add player, match has started")
             return
         
-        assert(issubclass(poker_bot.__class__, PokerBotTemplate))
         assert(poker_bot.name not in self.player_names)
         if len(self.player_list) == self.max_players:
             print("No more players can join")
@@ -61,13 +61,16 @@ class PokerGame:
         return new_result
     
     def play_round(self):
+        assert(self.has_started)
         assert(len(self.player_names) > 1)
         cards = self.cards.copy()
+        assert(len(cards) == 52)
         
         #draw hands
         hands_ref = {}
         hands = random.sample([*cards], 2 * len(self.player_list))
         cards = cards.difference(hands)
+        assert(len(cards) == 52 - 2 * len(self.player_list))
         
         index = 0
         stacks = {}
@@ -111,6 +114,7 @@ class PokerGame:
                 hands_ref.pop(name)
         
         if preflop_state["all_in"]:
+            assert(len(cards) == 52 - 2 * len(self.player_list))
             flop = set(random.sample([*cards], 5))
             results = self.play_showdown(flop, hands_ref, preflop_state["pot"])
             for player in results:
@@ -164,7 +168,9 @@ class PokerGame:
             
             if postflop_state["all_in"]:
                 num_to_add = 5 - len(postflop_state["flop"])
-                added_cards = random.sample([*cards], num_to_add)
+                assert(len(cards) == 52 - 2 * len(self.player_list) - 3 - i)
+                added_cards = set(random.sample([*cards], num_to_add))
+                postflop_state["flop"].update(added_cards)
                 cards = cards.difference(added_cards)
                 results = self.play_showdown(postflop_state["flop"], hands_ref, postflop_state["pot"])
                 
@@ -225,7 +231,7 @@ class PokerGame:
         
         if stacks[player_list[1].name] < blinds[1]:
             all_in = True
-            amount = stacks[player_list[1].name][1]
+            amount = stacks[player_list[1].name]
             stacks[player_list[1].name] = 0
             pot += amount
         else:
@@ -401,6 +407,7 @@ class PokerGame:
         return result
     
     def read_results(self, result):
+        print("round " + str(self.round - 1))
         print("blinds are {},{}".format(self.blinds[0], self.blinds[1]))
         print("starting stack is {}".format(self.starting_pot))
         print("----------")
