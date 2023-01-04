@@ -210,7 +210,7 @@ class PokerGame:
         
         completed_betting = False
         num_iter = 0
-        i = 1 if len(player_list) == 2 else 2
+        i = 0 if len(player_list) == 2 else 2
         game_history = []
         all_in = False
         
@@ -245,7 +245,7 @@ class PokerGame:
             call_amount = min(amount_call[name], stacks[name])
             
             player_state = {
-                "prog":"preflop",
+                "prog":"Preflop",
                 "position":i,
                 "all_in":all_in,
                 "game_history":game_history.copy(),

@@ -282,7 +282,7 @@ def make_range(set_direct):
 def range_simulate(hero, villains, flop, starter, num_sim):
     assert(len(starter) == 52)
     assert(num_sim > 0)
-    assert(len(flop) < 5)
+    assert(len(flop) <= 5)
     cards = starter.copy()
     
     check_set = set()
