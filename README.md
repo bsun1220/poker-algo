@@ -18,7 +18,7 @@ key "all_in" links to a boolean whether someone has went all in or not. Actions 
 key "game_history" provides a list of sequential events in tuple (name, action, time, amount)
 </li>
 <li> 
-key stack_size provides a dictionary of everyone in the table and their stacks
+key "stack_size" provides a dictionary of everyone in the table and their stacks
 </li>
 <li> 
 key "hand" refers to your current hand
