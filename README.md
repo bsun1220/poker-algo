@@ -21,19 +21,19 @@ key "game_history" provides a list of sequential events in tuple (name, action, 
 key stack_size provides a dictionary of everyone in the table and their stacks
 </li>
 <li> 
-key hand refers to your current hand
+key "hand" refers to your current hand
 </li>
 <li> 
-key pot refers to current pot
+key "pot" refers to current pot
 </li>
 <li> 
-flop refers to flop of cards. Cards are organized in tuple form (suit, number)
+key "flop" refers to flop of cards. Cards are organized in tuple form (suit, number)
 </li>
 <li> 
-call_amount refers to amount for call / check
+key "call_amount" refers to amount for call / check
 </li>
 <li> 
-mine_raise refers to minimum amount you must raise (without counting amount to call
+key "mine_raise" refers to minimum amount you must raise (without counting amount to call
 </li>
 </br></br>
 Some additional rules include that invalid actions result in the bot folding. There are sample bots in sample_bots.py which include a 
